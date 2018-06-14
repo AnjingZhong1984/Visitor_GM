@@ -1,0 +1,110 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:layout_gravity="center_horizontal"
+              android:gravity="center_horizontal"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="#F1F5FF"
+              android:id="@+id/checkout_page"
+              tools:context="fafa.com.visitor.ExternalActivity">
+
+    <LinearLayout
+            android:id="@+id/fullscreen_content_c"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="155dp">
+        <ImageView
+                android:keepScreenOn="true"
+                android:layout_width="60dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="50dp"
+                android:id="@+id/back"
+                android:src="@drawable/back"
+                android:contentDescription="NOContent"/>
+        <ImageView
+                android:keepScreenOn="true"
+                android:layout_width="180dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="50dp"
+                android:id="@+id/logo"
+                android:src="@drawable/logo"
+                android:contentDescription="TODO"/>
+
+        <RelativeLayout
+                android:layout_width="850dp"
+                android:gravity="end"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="50dp"
+                android:id="@+id/submit"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:srcCompat="@drawable/submit"
+                    android:id="@+id/submitm"
+                    android:contentDescription="TODO"/>
+            <TextView
+                    android:id="@+id/submitTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="#F07B4E"
+                    android:layout_marginStart="10dp"
+                    android:text="Leave\n离开"
+                    android:layout_toEndOf="@id/submitm">
+            </TextView>
+        </RelativeLayout>
+    </LinearLayout>
+    <View android:id="@+id/dotted_line"
+          android:layout_width="match_parent"
+          android:layout_height="5dp"
+          android:layout_marginLeft="13dp"
+          android:layout_marginRight="13dp"
+          android:background="@drawable/bg_dotted_line"
+          android:layerType="software"/>
+
+    <TextView
+            android:text="Check Out离开"
+            android:textColor="#0044F4"
+            android:textSize="24sp"
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:id="@+id/textView1"/>
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="20sp"
+              android:layout_marginTop="15dp"
+              android:textColor="#000000"
+              android:textAlignment="center"
+              android:id="@+id/titleDesc"
+              android:text="离开时，请输入您的PINCode或者员工号\nPlease provide Your Pin Code or H Code when You want to leave"/>
+    <EditText android:layout_width="600dp"
+              android:layout_height="wrap_content"
+              android:labelFor="@id/titleDesc"
+              android:id="@+id/pinCode"
+              android:singleLine="true"
+              android:maxLines="1"
+              android:textSize="20sp"
+              android:padding="10dp"
+              android:textColor="#000000"
+              android:background="@drawable/bg_edittext"
+              android:inputType="text"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="16sp"
+              android:visibility="invisible"
+              android:id="@+id/loading"
+              android:textColor="#ff0000"
+              android:text="提交中，请稍候...Please, Waiting...."
+              android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+
