@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.*;
 import android.util.Log;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
@@ -86,7 +88,7 @@ public class UsbPrintUtil {
         }
     }
 
-    public void print(final Map<String, String> parameters) {
+    public void print(final Map<String,Object> parameters) throws JSONException {
         boolean flag = openUsbDevice();
         usbPrint(parameters);
         close();
@@ -95,43 +97,54 @@ public class UsbPrintUtil {
                 @Override
                 public void run() {
                     openUsbDevice();
-                    usbPrint(parameters);
+                    try {
+                        usbPrint(parameters);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     close();
                 }
             }, 5000);
         }
     }
 
-    private void usbPrint(Map<String, String> parameters) {
+    private void usbPrint(Map<String,Object> parameters) throws JSONException {
         sendCommand(mEndpointIntr, mConnection, PrinterCmdUtils.init_printer());
-        StringBuffer data = new StringBuffer();
-        data.append("{D1000,0900,0550|}");//设置纸张尺寸，标签间隔距离、标签宽度、标签高度
-        data.append("{C|}");//清除缓存区数据
-        data.append("{U2;0030|}");//向后走纸到打印位置
-        data.append("{AX;+000,+000,+00|}");//定位打印原点x
-        data.append("{AY;+00,0|}");//定位打印原点y
-        data.append("{PC001;0900,0300,15,15,r,22,B|}");//打印数据格式
-        data.append("{RC001; 来访时间(Time)     " + parameters.get("date") + "|}");//打印数据
-        data.append("{PC002;0900,0220,15,15,r,22,B|}");//打印数据格式
-        data.append("{RC002; 访客姓名(Name)     " + parameters.get("visitEnglishFirstName") + " " + parameters.get("visitEnglishSurname") + "|}");//打印数据
-        data.append("{PC003;0900,0140,15,15,r,22,B|}");//打印数据格式
-        data.append("{RC003; 被访对象(Employee) " + parameters.get("name") + "|}");//打印数据
-        data.append("{PC004;0900,0060,15,15,r,22,B|}");//打印数据格式
-        data.append("{RC004; 凭证号(Pin)        " + parameters.get("pinCode") + "|}");//打印数据
-        data.append("{XS;I,0001,0000C1010|}");//打印设置
-
+        StringBuilder data = new StringBuilder();
+        //设置纸张尺寸，标签间隔距离、标签宽度、标签高度
+        data.append("{D1000,0900,0550|}");
+        //清除缓存区数据
+        data.append("{C|}");
+        //向后走纸到打印位置
+        data.append("{U2;0030|}");
+        //定位打印原点x
+        data.append("{AX;+000,+000,+00|}");
+        //定位打印原点y
+        data.append("{AY;+00,0|}");
+        //打印数据格式
+        data.append("{PC001;0900,0300,15,15,r,22,B|}");
+        //打印数据
+        data.append("{RC001; 来访时间(Time)     " + parameters.get("visitTime") + "|}");
+        //打印数据格式
+        data.append("{PC002;0900,0220,15,15,r,22,B|}");
+        //打印数据
+        data.append("{RC002; 访客姓名(Name)     " + parameters.get("visitName") + "|}");
+        //打印数据格式
+        data.append("{PC003;0900,0140,15,15,r,22,B|}");
+        //打印数据
+        data.append("{RC003; 被访对象(Employee) " + parameters.get("name") + "|}");
+        //打印数据格式
+        data.append("{PC004;0900,0060,15,15,r,22,B|}");
+        //打印数据
+        data.append("{RC004; 凭证号(Pin)        " + parameters.get("pinCode") + "|}");
+        //打印设置
+        data.append("{XS;I,0001,0000C1010|}");
         try {
             sendCommand(mEndpointIntr, mConnection, data.toString().getBytes("GB2312"));
             context.unregisterReceiver(mUsbPermissionActionReceiver);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-    }
-
-    public static String Char(int asciiCode) {
-        StringBuffer s = new StringBuffer();
-        s.append((char) asciiCode);
-        return s.toString();
     }
 
     private void sendCommand(UsbEndpoint mEndpointIntr, UsbDeviceConnection mConnection, byte[] content) {
@@ -150,7 +163,6 @@ public class UsbPrintUtil {
     }
 
     private void close() {
-
         if (mConnection != null) {
             mConnection.close();
             mConnection = null;
@@ -216,6 +228,7 @@ public class UsbPrintUtil {
     }
 
     private final BroadcastReceiver mUsbPermissionActionReceiver = new BroadcastReceiver() {
+        @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (ACTION_USB_PERMISSION.equals(action)) {

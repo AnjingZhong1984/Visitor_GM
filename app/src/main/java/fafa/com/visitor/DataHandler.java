@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import fafa.com.visitor.util.UsbPrintUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 /**
  * @author Silence
@@ -21,7 +23,7 @@ import java.net.URL;
 public class DataHandler {
 
     //    protected final static String SERVER_HOST = "http://153.13.200.56:6160";
-    protected final static String SERVER_HOST = "http://192.168.1.4:6161";
+    protected final static String SERVER_HOST = "http://192.168.1.180:6161";
 
     private static String inputStreamToString(InputStream inputStream) throws IOException {
         final int bufferSize = 1024;
@@ -233,18 +235,20 @@ public class DataHandler {
                         if (rep != null && rep.getBoolean("success")) {
                             activity.finish();
                             if (type == 0) {
-                                //TODO:pring label
+                                Map<String,Object> m = (Map<String, Object>) rep.get("data");
+                                UsbPrintUtil usbPrintUtil = new UsbPrintUtil(activity);
+                                usbPrintUtil.print(m);
                             }
                         } else {
                             Message message = new Message();
                             message.what = SHOW_MESSAGE_LONG;
                             message.obj = "请求异常";
-                            if (rep!=null && rep.get("message") != null) {
+                            if (rep != null && rep.get("message") != null) {
                                 message.obj = rep.get("message").toString();
                             }
                             handler.sendMessage(message);
                         }
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
