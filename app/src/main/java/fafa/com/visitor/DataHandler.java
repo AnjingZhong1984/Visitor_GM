@@ -9,21 +9,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import fafa.com.visitor.util.UsbPrintUtil;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Silence
  */
 public class DataHandler {
+    private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    //    protected final static String SERVER_HOST = "http://153.13.200.56:6160";
-    protected final static String SERVER_HOST = "http://192.168.1.180:6161";
+            protected final static String SERVER_HOST = "http://153.13.200.56:6161";
+//    protected final static String SERVER_HOST = "http://192.168.43.147:6161";
 
     private static String inputStreamToString(InputStream inputStream) throws IOException {
         final int bufferSize = 1024;
@@ -60,7 +63,7 @@ public class DataHandler {
             urlConnection.setDoInput(true);
             urlConnection.setUseCaches(false);
             DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
-            wr.writeBytes(object.toString());
+            wr.write(object.toString().getBytes());
             wr.flush();
             wr.close();
             // try to get response
@@ -131,6 +134,7 @@ public class DataHandler {
                     EditText reason = context.findViewById(R.id.reason);
                     EditText hcode = context.findViewById(R.id.hCode);
                     EditText badage = context.findViewById(R.id.badageNo);
+                    EditText remark = context.findViewById(R.id.remark);
                     if (name != null) {
                         name.setText("");
                     }
@@ -157,6 +161,9 @@ public class DataHandler {
                     }
                     if (badage != null) {
                         badage.setText("");
+                    }
+                    if (remark != null) {
+                        remark.setText("");
                     }
                     break;
             }
@@ -194,6 +201,7 @@ public class DataHandler {
                     EditText hcode = activity.findViewById(R.id.hCode);
                     EditText badage = activity.findViewById(R.id.badageNo);
                     EditText pcode = activity.findViewById(R.id.pinCode);
+                    EditText remark = activity.findViewById(R.id.remark);
                     JSONObject jsonObject = new JSONObject();
                     try {
                         if (name != null) {
@@ -226,6 +234,9 @@ public class DataHandler {
                         if (pcode != null) {
                             jsonObject.put("pinCode", pcode.getText());
                         }
+                        if (remark != null) {
+                            jsonObject.put("remark", remark.getText());
+                        }
                         jsonObject.put("visitType", type);
                         jsonObject.put("temporary", 1);
                         JSONObject rep = DataHandler.executePost(jsonObject, type == 9 ?
@@ -233,12 +244,36 @@ public class DataHandler {
                                 DataHandler.SERVER_HOST + "/fengqi/reserve/save");
                         handler.sendEmptyMessage(LOADING_HIDE);
                         if (rep != null && rep.getBoolean("success")) {
-                            activity.finish();
                             if (type == 0) {
-                                Map<String,Object> m = (Map<String, Object>) rep.get("data");
+                                Object mo = rep.get("data");
                                 UsbPrintUtil usbPrintUtil = new UsbPrintUtil(activity);
-                                usbPrintUtil.print(m);
+                                Map<String, Object> m = new HashMap<>();
+                                if (mo instanceof Map) {
+                                    m = (Map<String, Object>) mo;
+                                } else if (mo instanceof JSONObject) {
+                                    JSONObject mmo = (JSONObject) mo;
+                                    m.put("visitName", mmo.get("visitName"));
+                                    m.put("visitCompany", mmo.get("visitCompany"));
+                                    m.put("name", mmo.get("name"));
+                                    m.put("department", jsonObject.get("department"));
+                                    m.put("pinCode", mmo.get("pinCode"));
+                                    m.put("visitTime", sdf.format(new Date()));
+                                }
+                                if (m.size() == 0) {
+                                    m.put("visitName", jsonObject.get("visitName"));
+                                    m.put("visitCompany", jsonObject.get("visitCompany"));
+                                    m.put("name", jsonObject.get("name"));
+                                    m.put("department", jsonObject.get("department"));
+                                    m.put("pinCode", "000000");
+                                    m.put("visitTime", sdf.format(new Date()));
+                                }
+                                try {
+                                    usbPrintUtil.print(m);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
+                            activity.finish();
                         } else {
                             Message message = new Message();
                             message.what = SHOW_MESSAGE_LONG;

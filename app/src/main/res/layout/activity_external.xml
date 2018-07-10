@@ -112,19 +112,19 @@
                 android:layout_height="match_parent">
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:textSize="18sp"
-                      android:textColor="#666666"
+                      android:textSize="22sp"
+                      android:textColor="#006400"
                       android:id="@+id/heretosee"
                       android:layout_marginBottom="20dp"
-                      android:text="Here To See拜访对象"/>
+                      android:text="Here To See拜访对象" />
 
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:textSize="20sp"
+                      android:textSize="23sp"
                       android:layout_marginTop="15dp"
                       android:textColor="#000000"
                       android:id="@+id/nameDesc"
-                      android:text="Name员工姓名"/>
+                      android:text="Name员工姓名*" />
             <EditText android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:labelFor="@id/nameDesc"
@@ -139,11 +139,11 @@
 
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:textSize="20sp"
+                      android:textSize="23sp"
                       android:textColor="#000000"
                       android:layout_marginTop="15dp"
                       android:id="@+id/departmentDesc"
-                      android:text="Department员工部门"/>
+                      android:text="Department员工部门*"/>
             <EditText android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:labelFor="@id/departmentDesc"
@@ -158,8 +158,8 @@
 
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:textSize="20sp"
-                      android:textColor="#000000"
+                      android:textSize="23sp"
+                      android:textColor="#333333"
                       android:layout_marginTop="15dp"
                       android:id="@+id/emailDesc"
                       android:text="Mail员工邮箱"/>
@@ -198,19 +198,19 @@
                 android:layout_height="match_parent">
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:textSize="18sp"
-                      android:textColor="#666666"
+                      android:textSize="22sp"
+                      android:textColor="#006400"
                       android:id="@+id/yourinfo"
                       android:layout_marginBottom="20dp"
                       android:text="Your Information您的信息"/>
 
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:textSize="20sp"
+                      android:textSize="23sp"
                       android:layout_marginTop="15dp"
                       android:textColor="#000000"
                       android:id="@+id/visitCompanyDesc"
-                      android:text="Your Company您的公司"/>
+                      android:text="Your Company您的公司*"/>
             <EditText android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:labelFor="@id/visitCompanyDesc"
@@ -225,11 +225,11 @@
 
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:textSize="20sp"
+                      android:textSize="23sp"
                       android:textColor="#000000"
                       android:layout_marginTop="15dp"
                       android:id="@+id/visitNameDesc"
-                      android:text="Your Name您的姓名"/>
+                      android:text="Your Name您的姓名*"/>
             <EditText android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:labelFor="@id/visitNameDesc"
@@ -244,11 +244,11 @@
 
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:textSize="20sp"
+                      android:textSize="23sp"
                       android:textColor="#000000"
                       android:layout_marginTop="15dp"
                       android:id="@+id/visitMobileDesc"
-                      android:text="Your Phone您的电话"/>
+                      android:text="Your Phone您的电话*"/>
             <EditText android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:labelFor="@id/visitMobileDesc"
@@ -262,11 +262,11 @@
                       android:inputType="phone"/>
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:textSize="20sp"
+                      android:textSize="23sp"
                       android:textColor="#000000"
                       android:layout_marginTop="15dp"
                       android:id="@+id/reasonDesc"
-                      android:text="Reason来访事由"/>
+                      android:text="Reason来访事由*"/>
             <EditText android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:labelFor="@id/reasonDesc"

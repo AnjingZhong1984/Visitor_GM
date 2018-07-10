@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.*;
 import android.util.Log;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
@@ -88,7 +86,7 @@ public class UsbPrintUtil {
         }
     }
 
-    public void print(final Map<String,Object> parameters) throws JSONException {
+    public void print(final Map<String, Object> parameters) {
         boolean flag = openUsbDevice();
         usbPrint(parameters);
         close();
@@ -97,22 +95,44 @@ public class UsbPrintUtil {
                 @Override
                 public void run() {
                     openUsbDevice();
-                    try {
-                        usbPrint(parameters);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    usbPrint(parameters);
                     close();
                 }
             }, 5000);
         }
     }
 
-    private void usbPrint(Map<String,Object> parameters) throws JSONException {
+    private void usbPrint(Map<String, Object> parameters) {
+//        sendCommand(mEndpointIntr, mConnection, PrinterCmdUtils.init_printer());
+//        StringBuilder data = new StringBuilder();
+//        //设置纸张尺寸，标签间隔距离、标签宽度、标签高度
+//        data.append("{D1000,0900,0600|}");
+//        data.append("{C|}");
+//        data.append("{LC;0000,0129,0899,0129,0,3|}");
+//        data.append("{PC000;0010,0089,15,15,r,00,B=GeneralMills|}");
+//        data.append("{PC001;0590,0086,1,1,r,00,B=").append(parameters.get("visitTime").toString(), 0, 10).append("|}");
+//        data.append("{PC001;0900,0300,15,15,r,22,B|}");
+//        data.append("{PC002;0020,0229,15,15,r,00,B=Name:|}");
+//        data.append("{PC003;0020,0309,15,15,r,00,B=Company:|}");
+//        data.append("{PC004;0020,0389,15,15,r,00,B=Visiting:|}");
+//        data.append("{PC005;0020,0469,15,15,r,00,B=Dept.:|}");
+//        data.append("{PC006;0020,0559,15,15,r,00,B=PinCode:|}");
+//        data.append("{PC007;0450,0229,15,15,r,00,B=").append(parameters.get("visitName")).append("|}");
+//        data.append("{PC008;0450,0309,15,15,r,00,B=").append(parameters.get("visitCompany")).append("|}");
+//        data.append("{PC009;0460,0389,15,15,r,00,B=").append(parameters.get("name")).append("|}");
+//        data.append("{PC010;0460,0469,15,15,r,00,B=").append(parameters.get("department")).append("|}");
+//        data.append("{PC011;0460,0559,15,15,r,00,B=").append(parameters.get("pinCode")).append("|}");
+//        data.append("{XS;I,0001,0000C5001|}");
+//        try {
+//            sendCommand(mEndpointIntr, mConnection, data.toString().getBytes("GB2312"));
+//            context.unregisterReceiver(mUsbPermissionActionReceiver);
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
         sendCommand(mEndpointIntr, mConnection, PrinterCmdUtils.init_printer());
         StringBuilder data = new StringBuilder();
         //设置纸张尺寸，标签间隔距离、标签宽度、标签高度
-        data.append("{D1000,0900,0550|}");
+        data.append("{D1000,0900,0600|}");
         //清除缓存区数据
         data.append("{C|}");
         //向后走纸到打印位置
@@ -121,22 +141,36 @@ public class UsbPrintUtil {
         data.append("{AX;+000,+000,+00|}");
         //定位打印原点y
         data.append("{AY;+00,0|}");
-        //打印数据格式
-        data.append("{PC001;0900,0300,15,15,r,22,B|}");
+        data.append("{PC001;0900,0480,15,15,r,22,B|}");
+        String s = parameters.get("visitTime")+"";
+        if(s.length()>11){
+            s = s.substring(0,10);
+        }
         //打印数据
-        data.append("{RC001; 来访时间(Time)     " + parameters.get("visitTime") + "|}");
+        data.append("{RC001; General Mills           " + s + "|}");
+        data.append("{PC002;0900,0410,15,15,r,22,B|}");
+        data.append("{RC002; ......................................|}");
         //打印数据格式
-        data.append("{PC002;0900,0220,15,15,r,22,B|}");
+        data.append("{PC003;0900,0340,15,15,r,22,B|}");
         //打印数据
-        data.append("{RC002; 访客姓名(Name)     " + parameters.get("visitName") + "|}");
+        data.append("{RC003; Name:          " + parameters.get("visitName") + "|}");
         //打印数据格式
-        data.append("{PC003;0900,0140,15,15,r,22,B|}");
+        data.append("{PC004;0900,0270,15,15,r,22,B|}");
         //打印数据
-        data.append("{RC003; 被访对象(Employee) " + parameters.get("name") + "|}");
+        data.append("{RC004; Company:       " + parameters.get("visitCompany") + "|}");
         //打印数据格式
-        data.append("{PC004;0900,0060,15,15,r,22,B|}");
+        data.append("{PC005;0900,0200,15,15,r,22,B|}");
         //打印数据
-        data.append("{RC004; 凭证号(Pin)        " + parameters.get("pinCode") + "|}");
+        data.append("{RC005; Visiting:      " + parameters.get("name") + "|}");
+        //打印数据格式
+        data.append("{PC006;0900,0130,15,15,r,22,B|}");
+        //打印数据
+        data.append("{RC006; Dept.:         " + parameters.get("department") + "|}");
+        //打印数据格式
+        data.append("{PC007;0900,0060,15,15,r,22,B|}");
+        //打印数据
+        data.append("{RC007; PinCode:       " + parameters.get("pinCode") + "|}");
+//        data.append("{LC;0880,0400,0020,0400,0,3|}");
         //打印设置
         data.append("{XS;I,0001,0000C1010|}");
         try {
@@ -233,7 +267,7 @@ public class UsbPrintUtil {
             String action = intent.getAction();
             if (ACTION_USB_PERMISSION.equals(action)) {
                 synchronized (this) {
-                    UsbDevice usbDevice = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                    UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
                     if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
                         //user choose YES for your previously popup window asking for grant perssion for this usb device
                         if (null != usbDevice) {

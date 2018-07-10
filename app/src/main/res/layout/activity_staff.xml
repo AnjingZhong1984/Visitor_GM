@@ -105,23 +105,15 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="350dp"
-
+            android:gravity="top"
             android:layout_height="match_parent">
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:textSize="24sp"
-                  android:textColor="#666666"
-                  android:id="@+id/yourinfo"
-                  android:layout_marginBottom="20dp"
-                  android:text="Your Information您的信息"/>
-
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textSize="20sp"
-                  android:layout_marginTop="15dp"
+                  android:textSize="23sp"
+                  android:layout_marginTop="5dp"
                   android:textColor="#000000"
                   android:id="@+id/hCodeDesc"
-                  android:text="Your H Code 您的员工号"/>
+                  android:text="Your Code您的员工登录ID"/>
         <EditText android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:labelFor="@id/hCodeDesc"
@@ -136,7 +128,7 @@
 
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:textSize="20sp"
+                  android:textSize="23sp"
                   android:textColor="#000000"
                   android:layout_marginTop="15dp"
                   android:id="@+id/visitNameDesc"
@@ -155,7 +147,45 @@
 
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:textSize="23sp"
+                  android:textColor="#000000"
+                  android:layout_marginTop="15dp"
+                  android:id="@+id/remarkDesc"
+                  android:text="Your Location您的所在地"/>
+        <EditText android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:labelFor="@id/remarkDesc"
+                  android:id="@+id/remark"
+                  android:singleLine="true"
+                  android:maxLines="1"
                   android:textSize="20sp"
+                  android:padding="10dp"
+                  android:textColor="#000000"
+                  android:background="@drawable/bg_edittext"
+                  android:inputType="text"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="23sp"
+                  android:textColor="#000000"
+                  android:layout_marginTop="15dp"
+                  android:id="@+id/departmentDesc"
+                  android:text="Your Dept.您的部门"/>
+        <EditText android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:labelFor="@id/departmentDesc"
+                  android:id="@+id/department"
+                  android:singleLine="true"
+                  android:maxLines="1"
+                  android:textSize="20sp"
+                  android:padding="10dp"
+                  android:textColor="#000000"
+                  android:background="@drawable/bg_edittext"
+                  android:inputType="text"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="23sp"
                   android:textColor="#000000"
                   android:layout_marginTop="15dp"
                   android:id="@+id/badageNoDesc"
