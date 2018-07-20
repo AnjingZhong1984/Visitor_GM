@@ -25,7 +25,7 @@ import java.util.Map;
 public class DataHandler {
     private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-            protected final static String SERVER_HOST = "http://153.13.200.56:6161";
+    protected final static String SERVER_HOST = "http://153.13.200.56:6161";
 //    protected final static String SERVER_HOST = "http://192.168.43.147:6161";
 
     private static String inputStreamToString(InputStream inputStream) throws IOException {
@@ -113,9 +113,11 @@ public class DataHandler {
             super.handleMessage(msg);
             switch (msg.what) {
                 case SHOW_MESSAGE:
+                    loading.setVisibility(View.INVISIBLE);
                     Toast.makeText(context, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     break;
                 case SHOW_MESSAGE_LONG:
+                    loading.setVisibility(View.INVISIBLE);
                     Toast.makeText(context, msg.obj.toString(), Toast.LENGTH_LONG).show();
                     break;
                 case LOADING_SHOW:
@@ -125,6 +127,7 @@ public class DataHandler {
                     loading.setVisibility(View.INVISIBLE);
                     break;
                 case FORM_ClEAR:
+                    loading.setVisibility(View.INVISIBLE);
                     EditText name = context.findViewById(R.id.name);
                     EditText department = context.findViewById(R.id.department);
                     EditText email = context.findViewById(R.id.email);
@@ -185,6 +188,10 @@ public class DataHandler {
             return this;
         }
 
+        private boolean checkEmpty(EditText str) {
+            return str != null && str.getText().toString().trim().length() > 0;
+        }
+
         @Override
         public void onClick(View v) {
             new Thread(new Runnable() {
@@ -204,37 +211,45 @@ public class DataHandler {
                     EditText remark = activity.findViewById(R.id.remark);
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        if (name != null) {
+                        if (checkEmpty(name)) {
                             jsonObject.put("name", name.getText());
                         }
-                        if (department != null) {
+                        if (checkEmpty(department)) {
                             jsonObject.put("department", department.getText());
                         }
-                        if (email != null) {
+                        if (checkEmpty(email)) {
                             jsonObject.put("email", email.getText());
                         }
-                        if (visitCompany != null) {
+                        if (checkEmpty(visitCompany)) {
                             jsonObject.put("visitCompany", visitCompany.getText());
                         }
-                        if (visitName != null) {
+                        if (checkEmpty(visitName)) {
                             jsonObject.put("visitName", visitName.getText());
+                        } else {
+                            if (type != 9) {
+                                Message message = new Message();
+                                message.what = SHOW_MESSAGE_LONG;
+                                message.obj = "请填写完整内容";
+                                handler.sendMessage(message);
+                                return;
+                            }
                         }
-                        if (visitMobile != null) {
+                        if (checkEmpty(visitMobile)) {
                             jsonObject.put("visitMobile", visitMobile.getText());
                         }
-                        if (reason != null) {
+                        if (checkEmpty(reason)) {
                             jsonObject.put("reason", reason.getText());
                         }
-                        if (hcode != null) {
+                        if (checkEmpty(hcode)) {
                             jsonObject.put("hCode", hcode.getText());
                         }
-                        if (badage != null) {
+                        if (checkEmpty(badage)) {
                             jsonObject.put("badageNo", badage.getText());
                         }
-                        if (pcode != null) {
+                        if (checkEmpty(pcode)) {
                             jsonObject.put("pinCode", pcode.getText());
                         }
-                        if (remark != null) {
+                        if (checkEmpty(remark)) {
                             jsonObject.put("remark", remark.getText());
                         }
                         jsonObject.put("visitType", type);
@@ -285,6 +300,10 @@ public class DataHandler {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        Message message = new Message();
+                        message.what = SHOW_MESSAGE_LONG;
+                        message.obj = e.getMessage();
+                        handler.sendMessage(message);
                     }
                 }
             }).start();
