@@ -26,7 +26,7 @@ public class DataHandler {
     private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     protected final static String SERVER_HOST = "http://153.13.200.56:6161";
-//    protected final static String SERVER_HOST = "http://192.168.43.147:6161";
+//    protected final static String SERVER_HOST = "http://192.168.1.155:6161";
 
     private static String inputStreamToString(InputStream inputStream) throws IOException {
         final int bufferSize = 1024;
@@ -216,6 +216,14 @@ public class DataHandler {
                         }
                         if (checkEmpty(department)) {
                             jsonObject.put("department", department.getText());
+                        } else {
+                            if (type == 0) {
+                                Message message = new Message();
+                                message.what = SHOW_MESSAGE_LONG;
+                                message.obj = "请填写正确的员工信息";
+                                handler.sendMessage(message);
+                                return;
+                            }
                         }
                         if (checkEmpty(email)) {
                             jsonObject.put("email", email.getText());

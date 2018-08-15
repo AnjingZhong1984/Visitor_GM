@@ -3,10 +3,15 @@ package fafa.com.visitor;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,6 +66,35 @@ public class ExternalActivity extends AppCompatActivity {
             hide();
         }
     };
+
+    protected Handler.Callback callback = new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            TextView veryfyText = findViewById(R.id.verfyNameResult);
+            String msgText = msg.obj.toString();
+            EditText hname = findViewById(R.id.department);
+            EditText mail = findViewById(R.id.email);
+            if (msgText.equals("error")) {
+                veryfyText.setText("姓名验证失败！请咨询前台人员，获取正确姓名");
+                hname.setText("");
+                mail.setText("");
+            } else if (msgText.equals("init")) {
+                veryfyText.setVisibility(View.VISIBLE);
+                veryfyText.setText("验证中...请稍候");
+            } else {
+                veryfyText.setVisibility(View.GONE);
+                String[] s = msgText.split(",");
+                if (s.length > 0) {
+                    hname.setText(s[0]);
+                }
+                if (s.length > 1) {
+                    mail.setText(s[1]);
+                }
+            }
+            return true;
+        }
+    };
+
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
      * system UI. This is to prevent the jarring behavior of controls going away
@@ -93,7 +127,7 @@ public class ExternalActivity extends AppCompatActivity {
                 finish();
             }
         });
-        findViewById(R.id.submit).setOnClickListener(new DataHandler.DataSubmitListener().builder(this,0));
+        findViewById(R.id.submit).setOnClickListener(new DataHandler.DataSubmitListener().builder(this, 0));
         findViewById(R.id.reset).setOnClickListener(new DataHandler.DataRestListener().builder(this));
 
         TimerTask activeTask = new TimerTask() {
@@ -103,6 +137,40 @@ public class ExternalActivity extends AppCompatActivity {
             }
         };
         new Timer().schedule(activeTask, 0, 1000);
+
+        final EditText editText = findViewById(R.id.name);
+        findViewById(R.id.verfyNameBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (editText.getText().toString().trim().length() > 0) {
+                            Message message1 = new Message();
+                            message1.obj = "init";
+                            new Handler(Looper.getMainLooper(), callback).sendMessage(message1);
+                            //调用域信息，获取值
+                            JSONObject jsonObject = new JSONObject();
+                            JSONObject rep = null;
+                            try {
+                                jsonObject.put("name", editText.getText());
+                                rep = DataHandler.executePost(jsonObject, "http://153.13.200.56:28080/ldap/readLdap");
+                                Message message = new Message();
+                                if (rep != null && rep.getBoolean("success")) {
+                                    message.obj = rep.getString("department") + "," + rep.getString("mail");
+                                } else {
+                                    message.obj = "error";
+                                }
+                                new Handler(Looper.getMainLooper(), callback).sendMessage(message);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
+            }
+        });
+
     }
 
     @Override

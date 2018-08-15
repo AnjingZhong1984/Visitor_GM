@@ -137,6 +137,16 @@
                       android:background="@drawable/bg_edittext"
                       android:inputType="text"/>
 
+            <Button
+                    android:text="员工姓名校验"
+                    android:background="@drawable/shape_button"
+                    android:layout_width="140dp"
+                    android:layout_height="35dp"
+                    android:textSize="16sp"
+                    android:textColor="#000fff"
+                    android:id="@+id/verfyNameBtn"
+                    android:layout_marginTop="5dp" />
+
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:textSize="23sp"
@@ -183,6 +193,15 @@
                       android:textColor="#ff0000"
                       android:text="登记中，请稍候...Please, Waiting...."
                       android:layout_marginTop="20dp"/>
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="16sp"
+                      android:visibility="gone"
+                      android:id="@+id/verfyNameResult"
+                      android:textColor="#ff0000"
+                      android:text="姓名验证失败！请咨询前台人员，获取正确姓名"
+                      android:layout_marginTop="10dp"/>
 
         </LinearLayout>
         <View android:layout_width="1dp"
@@ -271,8 +290,7 @@
                       android:layout_height="wrap_content"
                       android:labelFor="@id/reasonDesc"
                       android:id="@+id/reason"
-                      android:minLines="3"
-                      android:maxLines="4"
+                      android:maxLines="1"
                       android:textSize="20sp"
                       android:padding="10dp"
                       android:textColor="#000000"

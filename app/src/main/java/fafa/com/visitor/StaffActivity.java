@@ -133,7 +133,6 @@ public class StaffActivity extends AppCompatActivity {
         veryfyText = findViewById(R.id.verfyResult);
 
         final EditText editText = findViewById(R.id.hCode);
-        final EditText hName = findViewById(R.id.visitName);
         findViewById(R.id.verfyBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
