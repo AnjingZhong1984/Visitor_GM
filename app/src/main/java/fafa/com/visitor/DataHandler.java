@@ -267,7 +267,7 @@ public class DataHandler {
                                 DataHandler.SERVER_HOST + "/fengqi/reserve/save");
                         handler.sendEmptyMessage(LOADING_HIDE);
                         if (rep != null && rep.getBoolean("success")) {
-                            if (type == 0) {
+                            if (type == 0 || type == 2) {
                                 Object mo = rep.get("data");
                                 UsbPrintUtil usbPrintUtil = new UsbPrintUtil(activity);
                                 Map<String, Object> m = new HashMap<>();
@@ -296,7 +296,15 @@ public class DataHandler {
                                     e.printStackTrace();
                                 }
                             }
-                            activity.finish();
+                            if (FullscreenActivity.FLOOR == 12) {
+                                activity.finish();
+                            } else if(FullscreenActivity.FLOOR == 11){
+                                Message message = new Message();
+                                message.what = SHOW_MESSAGE_LONG;
+                                message.obj = "欢迎再次光临 Welcome Again";
+                                handler.sendMessage(message);
+                                pcode.setText("");
+                            }
                         } else {
                             Message message = new Message();
                             message.what = SHOW_MESSAGE_LONG;

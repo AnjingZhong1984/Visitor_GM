@@ -73,22 +73,18 @@ public class StaffActivity extends AppCompatActivity {
         @Override
         public boolean handleMessage(Message msg) {
             if (msg.obj.toString().equals("error")) {
-                veryfyText.setText("GID验证错误，请输入正确GID");
+                veryfyText.setText("Please Provide Right Gid GID验证错误，请输入正确GID");
             } else if (msg.obj.toString().equals("init")) {
                 veryfyText.setVisibility(View.VISIBLE);
-                veryfyText.setText("验证中...请稍候");
+                veryfyText.setText("Verifying...Please Wait 验证中...请稍候");
             } else {
                 veryfyText.setVisibility(View.GONE);
                 findViewById(R.id.verfyBtn).setVisibility(View.GONE);
                 EditText hname = findViewById(R.id.visitName);
                 hname.setText(msg.obj.toString());
                 hname.setVisibility(View.VISIBLE);
-                findViewById(R.id.visitNameDesc).setVisibility(View.VISIBLE);
-                findViewById(R.id.remarkDesc).setVisibility(View.VISIBLE);
                 findViewById(R.id.remark).setVisibility(View.VISIBLE);
-                findViewById(R.id.departmentDesc).setVisibility(View.VISIBLE);
                 findViewById(R.id.department).setVisibility(View.VISIBLE);
-                findViewById(R.id.badageNoDesc).setVisibility(View.VISIBLE);
                 findViewById(R.id.badageNo).setVisibility(View.VISIBLE);
             }
             return true;

@@ -1,6 +1,7 @@
 package fafa.com.visitor;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -75,12 +76,12 @@ public class ExternalActivity extends AppCompatActivity {
             EditText hname = findViewById(R.id.department);
             EditText mail = findViewById(R.id.email);
             if (msgText.equals("error")) {
-                veryfyText.setText("姓名验证失败！请咨询前台人员，获取正确姓名");
+                veryfyText.setText("If Verify Failture, Please find help from reception \n 姓名验证失败！请咨询前台人员，获取正确姓名");
                 hname.setText("");
                 mail.setText("");
             } else if (msgText.equals("init")) {
                 veryfyText.setVisibility(View.VISIBLE);
-                veryfyText.setText("验证中...请稍候");
+                veryfyText.setText("Verifying...Please Wait 验证中...请稍候");
             } else {
                 veryfyText.setVisibility(View.GONE);
                 String[] s = msgText.split(",");
@@ -129,7 +130,6 @@ public class ExternalActivity extends AppCompatActivity {
         });
         findViewById(R.id.submit).setOnClickListener(new DataHandler.DataSubmitListener().builder(this, 0));
         findViewById(R.id.reset).setOnClickListener(new DataHandler.DataRestListener().builder(this));
-
         TimerTask activeTask = new TimerTask() {
             @Override
             public void run() {

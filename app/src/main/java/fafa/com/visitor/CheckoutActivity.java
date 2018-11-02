@@ -87,12 +87,16 @@ public class CheckoutActivity extends AppCompatActivity {
                 hide();
             }
         });
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        if (FullscreenActivity.FLOOR == 12) {
+            findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        } else if (FullscreenActivity.FLOOR == 11) {
+            findViewById(R.id.back).setVisibility(View.GONE);
+        }
         findViewById(R.id.submit).setOnClickListener(new DataHandler.DataSubmitListener().builder(this, 9));
 
         TimerTask activeTask = new TimerTask() {

@@ -1,14 +1,20 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:layout_gravity="center_horizontal"
-              android:gravity="center_horizontal"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:background="#F1F5FF"
-              android:id="@+id/staff_page"
-              tools:context="fafa.com.visitor.ExternalActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="@drawable/background1"
+                android:id="@+id/staff_page"
+                tools:context="fafa.com.visitor.StaffActivity">
+
+    <ImageView
+            android:keepScreenOn="true"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="35dp"
+            android:layout_width="250dp"
+            android:layout_height="90dp"
+            android:src="@drawable/logo1"/>
 
     <LinearLayout
             android:id="@+id/fullscreen_content_s"
@@ -16,73 +22,8 @@
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="155dp">
-        <ImageView
-                android:keepScreenOn="true"
-                android:layout_width="60dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="50dp"
-                android:id="@+id/back"
-                android:src="@drawable/back"
-                android:contentDescription="NOContent"/>
-        <ImageView
-                android:keepScreenOn="true"
-                android:layout_width="180dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="50dp"
-                android:id="@+id/logo"
-                android:src="@drawable/logo"
-                android:contentDescription="TODO"/>
-
-        <RelativeLayout
-                android:layout_width="680dp"
-                android:gravity="end"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="50dp"
-                android:id="@+id/reset"
-                android:layout_height="wrap_content">
-            <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    app:srcCompat="@drawable/modify"
-                    android:id="@+id/resetm"
-                    android:contentDescription="TODO"/>
-            <TextView
-                    android:id="@+id/resetTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textColor="#79A0F1"
-                    android:layout_marginStart="10dp"
-                    android:text="Reset\n重填"
-                    android:layout_toEndOf="@id/resetm">
-            </TextView>
-        </RelativeLayout>
-
-        <RelativeLayout
-                android:layout_width="150dp"
-                android:gravity="end"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="50dp"
-                android:id="@+id/submit"
-                android:layout_height="wrap_content">
-            <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    app:srcCompat="@drawable/submit"
-                    android:id="@+id/submitm"
-                    android:contentDescription="TODO"/>
-            <TextView
-                    android:id="@+id/submitTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textColor="#F07B4E"
-                    android:layout_marginStart="10dp"
-                    android:text="Submit\n提交"
-                    android:layout_toEndOf="@id/submitm">
-            </TextView>
-        </RelativeLayout>
     </LinearLayout>
+
     <View android:id="@+id/dotted_line"
           android:layout_width="match_parent"
           android:layout_height="5dp"
@@ -91,142 +32,127 @@
           android:background="@drawable/bg_dotted_line"
           android:layerType="software"/>
 
-
     <TextView
-            android:text="Staff Register 员工登记"
-            android:textColor="#0044F4"
-            android:textSize="24sp"
-            android:layout_marginTop="30dp"
+            android:text="Staff Register \n 员工登记"
+            android:textColor="#ffffff"
+            android:textSize="35sp"
+            android:layout_marginTop="35dp"
             android:textAlignment="center"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="100dp"
+            android:lineSpacingExtra="10dp"
             android:id="@+id/textView1"/>
 
     <LinearLayout
             android:orientation="vertical"
-            android:layout_width="350dp"
-            android:gravity="top"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="210dp"
+            android:layout_marginLeft="390dp"
             android:layout_height="match_parent">
+
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:textSize="23sp"
-                  android:layout_marginTop="5dp"
-                  android:textColor="#000000"
-                  android:id="@+id/hCodeDesc"
-                  android:text="Your Code您的员工GID"/>
-        <EditText android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:labelFor="@id/hCodeDesc"
-                  android:id="@+id/hCode"
-                  android:singleLine="true"
-                  android:maxLines="1"
-                  android:textSize="20sp"
-                  android:padding="10dp"
-                  android:textColor="#000000"
-                  android:background="@drawable/bg_edittext"
-                  android:inputType="text"/>
-        <Button
-                android:text="点击校验GID"
-                android:background="@drawable/shape_button"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="#000fff"
-                android:id="@+id/verfyBtn"
-                android:layout_marginTop="5dp" />
+                  android:textSize="24sp"
+                  android:textColor="#ffffff"
+                  android:id="@+id/yourinfo"
+                  android:layout_marginBottom="40dp"
+                  android:text="Your Information 您的信息"/>
+
+
+        <LinearLayout android:orientation="horizontal" android:layout_width="500dp"
+                      android:layout_height="wrap_content">
+            <EditText android:layout_width="340dp"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/hCode"
+                      android:singleLine="true"
+                      android:maxLines="1"
+                      android:textSize="20sp"
+                      android:padding="13dp"
+                      android:textColor="#666666"
+                      android:textColorHint="#666666"
+                      android:hint="Your Code您的员工GID"
+                      android:background="@drawable/bg_edittext"
+                      android:inputType="text"/>
+            <Button
+                    android:text="点击校验GID"
+                    android:background="@drawable/shape_button"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#000fff"
+                    android:id="@+id/verfyBtn"/>
+        </LinearLayout>
 
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="16sp"
                   android:visibility="gone"
                   android:id="@+id/verfyResult"
-                  android:textColor="#ff0000"
+                  android:textColor="#ffff00"
                   android:text="GID验证错误，请输入正确GID"
                   android:layout_marginTop="10dp"/>
 
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textSize="23sp"
-                  android:textColor="#000000"
-                  android:layout_marginTop="15dp"
-                  android:id="@+id/visitNameDesc"
-                  android:visibility="invisible"
-                  android:text="Your Name您的姓名"/>
         <EditText android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:labelFor="@id/visitNameDesc"
+                  android:layout_marginTop="25dp"
                   android:id="@+id/visitName"
                   android:singleLine="true"
                   android:maxLines="1"
                   android:textSize="20sp"
-                  android:padding="10dp"
-                  android:textColor="#000000"
+                  android:padding="13dp"
+                  android:textColor="#666666"
+                  android:textColorHint="#666666"
                   android:cursorVisible="false"
                   android:focusable="false"
                   android:focusableInTouchMode="false"
+                  android:hint="Your Name您的姓名"
                   android:background="@drawable/bg_edittext"
                   android:visibility="invisible"
                   android:inputType="text"/>
 
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textSize="23sp"
-                  android:textColor="#000000"
-                  android:layout_marginTop="15dp"
-                  android:id="@+id/remarkDesc"
-                  android:visibility="invisible"
-                  android:text="Your Location您的所在地"/>
         <EditText android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:labelFor="@id/remarkDesc"
+                  android:layout_marginTop="25dp"
                   android:id="@+id/remark"
                   android:singleLine="true"
                   android:maxLines="1"
                   android:textSize="20sp"
-                  android:padding="10dp"
-                  android:textColor="#000000"
+                  android:padding="13dp"
+                  android:textColor="#666666"
+                  android:textColorHint="#666666"
+                  android:hint="Your Location您的所在地"
                   android:background="@drawable/bg_edittext"
                   android:visibility="invisible"
                   android:inputType="text"/>
 
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textSize="23sp"
-                  android:textColor="#000000"
-                  android:layout_marginTop="15dp"
-                  android:id="@+id/departmentDesc"
-                  android:visibility="invisible"
-                  android:text="Your Dept.您的部门"/>
         <EditText android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:labelFor="@id/departmentDesc"
+                  android:layout_marginTop="25dp"
                   android:id="@+id/department"
                   android:singleLine="true"
                   android:maxLines="1"
                   android:textSize="20sp"
-                  android:padding="10dp"
-                  android:textColor="#000000"
+                  android:padding="13dp"
+                  android:textColor="#666666"
+                  android:textColorHint="#666666"
+                  android:hint="Your Dept.您的部门"
                   android:background="@drawable/bg_edittext"
                   android:visibility="invisible"
                   android:inputType="text"/>
 
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textSize="23sp"
-                  android:textColor="#000000"
-                  android:layout_marginTop="15dp"
-                  android:visibility="invisible"
-                  android:id="@+id/badageNoDesc"
-                  android:text="Visitor Badge No. 访客证号码"/>
+
         <EditText android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:labelFor="@id/badageNoDesc"
+                  android:layout_marginTop="25dp"
                   android:id="@+id/badageNo"
                   android:singleLine="true"
                   android:maxLines="1"
                   android:textSize="20sp"
-                  android:padding="10dp"
-                  android:textColor="#000000"
+                  android:padding="13dp"
+                  android:textColor="#666666"
+                  android:textColorHint="#666666"
+                  android:hint="Visitor Badge No. 访客证号码*"
                   android:background="@drawable/bg_edittext"
                   android:visibility="invisible"
                   android:inputType="phone"/>
@@ -236,12 +162,49 @@
                   android:textSize="16sp"
                   android:visibility="invisible"
                   android:id="@+id/loading"
-                  android:textColor="#ff0000"
+                  android:textColor="#ffff00"
                   android:text="登记中，请稍候...Please, Waiting...."
                   android:layout_marginTop="10dp"/>
 
+
     </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:layout_marginTop="660dp"
+                  android:orientation="horizontal">
+        <ImageView
+                android:layout_width="160dp"
+                android:layout_height="120dp"
+                android:id="@+id/back"
+                android:src="@drawable/back1"
+                android:contentDescription="NOContent"/>
 
-</LinearLayout>
 
+        <ImageView
+                android:layout_width="160dp"
+                android:layout_height="120dp"
+                app:srcCompat="@drawable/rest1"
+                android:id="@+id/reset"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:contentDescription="TODO"/>
 
+        <ImageView
+                android:layout_width="160dp"
+                android:layout_height="120dp"
+                app:srcCompat="@drawable/submit1"
+                android:id="@+id/submit"
+                android:contentDescription="TODO"/>
+
+    </LinearLayout>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/bottom"
+            android:id="@+id/bottomImage"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="743dp"/>
+
+</RelativeLayout>

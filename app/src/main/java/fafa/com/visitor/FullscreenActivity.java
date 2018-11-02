@@ -1,6 +1,7 @@
 package fafa.com.visitor;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -19,6 +20,8 @@ import java.util.TimerTask;
  * @author Silence
  */
 public class FullscreenActivity extends AppCompatActivity {
+
+    public final static int FLOOR = 11;
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -117,8 +120,14 @@ public class FullscreenActivity extends AppCompatActivity {
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
-        HomePage homePage = new HomePage(findViewById(R.id.external), findViewById(R.id.staff), findViewById(R.id.checkout), this);
-        homePage.init();
+        if (FLOOR == 12) {
+            HomePage homePage = new HomePage(findViewById(R.id.external), findViewById(R.id.staff), findViewById(R.id.checkout), this);
+            homePage.init();
+        } else if (FLOOR == 11) {
+            Intent intent = new Intent(this, CheckoutActivity.class);
+            this.startActivity(intent);
+        }
+
 
         TimerTask activeTask = new TimerTask() {
             @Override
